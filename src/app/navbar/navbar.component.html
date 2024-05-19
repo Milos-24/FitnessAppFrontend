@@ -1,0 +1,89 @@
+<nav class="navbar bg-body-tertiary fixed-top">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#">Fitness App</a>
+    <div class="row">
+      <div class="col">
+        <button class="btn btn-outline-secondary" (click)="switchToComponent('Home')">Home</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-secondary" (click)="switchToComponent('Messages')">Messages</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-secondary" (click)="switchToComponent('Profile')">Profile</button>
+      </div>
+      <div class="col">
+        <button class="btn btn-outline-secondary" (click)="switchToComponent('Suggestions')">Suggestions</button>
+      </div>
+      <div class="col-auto">
+        <button class="navbar-toggler" type="button" (click)="toggleOffcanvas()" aria-expanded="offcanvasOpen" aria-controls="offcanvasNavbar" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+      </div>
+    </div>
+      <div class="offcanvas offcanvas-end" [class.show]="offcanvasOpen" tabindex="-1" id="offcanvasNavbar" aria-labelledby="offcanvasNavbarLabel">
+        <div class="offcanvas-header">
+          <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Settings</h5>
+          <button type="button" class="btn-close" (click)="toggleOffcanvas()" aria-label="Close"></button>
+        </div>
+        <div class="offcanvas-body">
+          <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
+            <li class="nav-item">
+              <h2 class="nav-link active" aria-current="page">Filter</h2>
+            </li>
+            <li class="nav-item dropdown" [class.show]="dropdownOpen" (click)="fetchDropdownItemsLocation()">
+              <a class="nav-link dropdown-toggle" role="button">
+                Location
+              </a>
+              <ul class="dropdown-menu" [class.show]="dropdownOpen">
+                <li *ngFor="let item of dropdownItems">
+                  <button class="dropdown-item" (click)="onLocationButtonClick(item)">{{ item }}</button>
+                </li>
+              </ul>
+            </li>
+            <li>
+              <hr class="dropdown-divider" />
+            </li>
+            <li class="nav-item dropdown" [class.show]="dropdownOpenCategory" (click)="fetchDropdownItemsCategory()">
+                <a class="nav-link dropdown-toggle" role="button">
+                  Category
+                </a>
+                <ul class="dropdown-menu" [class.show]="dropdownOpenCategory">
+                  <li *ngFor="let category of dropdownItemsCategory">
+                    <button class="dropdown-item" (click)="onCategoryButtonClick(category)">{{ category }}</button>
+                  </li>
+                </ul>
+              </li>
+          </ul>
+          <hr>
+            <div class="container mt-3 navbar-nav justify-content-end flex-grow-1 pe-3">
+                <div class="search-form-container">
+                  <form class="d-flex mt-3" role="search" (ngSubmit)="onSearch()">
+                    <input class="form-control me-2" type="search" placeholder="Search" [(ngModel)]="searchQuery" aria-label="Search" name="searchQuery"/>
+                    <button class="btn btn-outline-success" type="submit">Search</button>
+                  </form>
+                  <div class="checkboxes mt-3">
+                    <div class="form-check" *ngFor="let option of options">
+                      <input class="form-check-input" type="radio" [value]="option.id" id="{{option.id}}" name="optionGroup" [(ngModel)]="selectedOption" />
+                      <label class="form-check-label" for="{{option.id}}">{{option.label}}</label>
+                    </div>
+                  </div>
+                </div>              
+            </div>     
+            <hr>      
+            <div class="container mt-4">
+              <h3>Subscribe to a Category</h3>
+              <div class="form-check" *ngFor="let item of categories">
+                <input class="form-check-input" type="checkbox" [id]="item" [checked]="selectedItems.includes(item)"
+                       (change)="toggleSelection(item)">
+                <label class="form-check-label" [for]="item">
+                  {{ item }}
+                </label>
+              </div>
+              <button class="btn btn-outline-success mt-2" type="submit" (click)="subscribe()">Subscribe</button>
+
+            </div>
+        </div>
+      </div>
+    </div>
+  </nav>
+  

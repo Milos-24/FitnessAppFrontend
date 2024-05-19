@@ -1,0 +1,34 @@
+<div class="container mt-5 registration-container d-flex justify-content-center">
+  <form>
+    <h1 class="mb-3 form-floating justify-content-end" style="text-align: center;color: #007bff;">Welcome to FitnessApp</h1>
+    <div class="form-floating mb-3 ">
+      <input type="text" class="form-control" id="firstName" placeholder="First Name" [(ngModel)]="firstName" name="firstName" required>
+      <label for="firstName">First Name</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="lastName" placeholder="Last Name" [(ngModel)]="lastName" name="lastName" required>
+      <label for="lastName">Last Name</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="username" placeholder="Username" [(ngModel)]="username" name="username" required>
+      <label for="username">Username</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="password" class="form-control" id="password" placeholder="Password" [(ngModel)]="password" name="password" required>
+      <label for="password">Password</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="password" class="form-control" id="password" placeholder="Confirm Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+        <label for="password">Confirm Password</label>
+      </div>
+    <div class="form-floating mb-3">
+      <input type="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="email" name="email" required>
+      <label for="email">Email</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" id="city" placeholder="City" [(ngModel)]="city" name="city">
+      <label for="city">City</label>
+    </div>
+    <button type="submit" class="btn btn-primary" (click)="onSubmit()">Edit</button>
+  </form>
+</div>

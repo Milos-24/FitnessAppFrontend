@@ -1,0 +1,92 @@
+<div class="container mt-5 registration-container d-flex justify-content-center">
+  <form class="mr-3" style="padding-right: 5px;">
+      <h1 class="mb-3 form-floating" style="text-align: center;color: #007bff;">Edit {{username}} profile</h1>
+      <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="firstName" placeholder="First Name" [(ngModel)]="firstName" name="firstName" required>
+          <label for="firstName">First Name</label>
+      </div>
+      <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="lastName" placeholder="Last Name" [(ngModel)]="lastName" name="lastName" required>
+          <label for="lastName">Last Name</label>
+      </div>
+      <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="password" placeholder="New Password" [(ngModel)]="password" name="password" required>
+          <label for="password">New Password</label>
+      </div>
+      <div class="form-floating mb-3">
+          <input type="password" class="form-control" id="confirmPassword" placeholder="Confirm New Password" [(ngModel)]="confirmPassword" name="confirmPassword" required>
+          <label for="confirmPassword">Confirm New Password</label>
+      </div>
+      <div class="form-floating mb-3">
+          <input type="email" class="form-control" id="email" placeholder="Email" [(ngModel)]="email" name="email" required>
+          <label for="email">Email</label>
+      </div>
+      <div class="form-floating mb-3">
+          <input type="text" class="form-control" id="city" placeholder="City" [(ngModel)]="city" name="city">
+          <label for="city">City</label>
+      </div>
+      <button type="submit" class="btn btn-primary" (click)="onSubmit()">Save</button>
+  </form>
+
+  <form style="padding-left: 5px;">
+      <h1 class="mb-3 form-floating" style="text-align: center; color: #007bff;">Journal Entry</h1>
+      <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="weight" name="weight" placeholder="Weight" [(ngModel)]="weight">
+        <label for="weight">Weight</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="exerciseEntry" name="exerciseEntry" placeholder="Exercise Entry" [(ngModel)]="exerciseEntry">
+        <label for="exerciseEntry">Exercise Entry</label>
+    </div>
+    <div class="form-floating mb-3">
+        <input type="text" class="form-control" id="weightEntry" placeholder="Weight Entry" name="progressEntry" [(ngModel)]="progressEntry">
+        <label for="weightEntry">Weight Entry</label>
+    </div>
+      <button type="submit" class="btn btn-primary" (click)="addJournalEntry()">Save</button>
+  </form>
+</div>
+
+
+<div class="container mt-4" style="padding-bottom: 50px;">
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2>Journal</h2>
+    <button (click)="onSaveJournal()" class="btn btn-primary">Save</button>
+  </div>
+  <div class="row scroll-container">
+    <div class="col-md-4 mb-3" *ngFor="let j of journal">
+      <div class="card mt-2">
+        <div class="card-body">
+          <h2 class="card-title">Weight: {{ j.weight }}</h2>
+          <p class="card-text">Exercise Entry: {{ j.exerciseEntry }}</p>
+          <p class="card-text">Progress Entry: {{ j.progressEntry }}</p>
+          <p class="card-text">Entry Date: {{ j.entryDate | date:'dd/MM/yyyy HH:mm:ss' }}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="chart-container justify-content-center mt-4">
+    <canvas id="MyChart" width="400" height="400">{{ chart }}</canvas>
+  </div>
+</div>
+
+
+  <div class="container mt-4" style=" padding-bottom: 50px;">
+  <h2>Membership History</h2>
+  <div class="row scroll-container">
+    <div class="col-md-4  mb-3" *ngFor="let program of memberships">
+      <div class="card mt-2">
+        <div class="card-body">
+          <h2 class="card-title">Fitness Program: {{program.fitnessProgram}}</h2>
+          <p class="card-text">Creator: {{ program.username }}</p>
+          <p class="card-text">Card Number: {{ program.card }}</p>
+          <p class="card-text">Payment Type: {{ program.paymentType }}</p>
+          <p class="card-text">Start Date: {{ program.startDate | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+          <p class="card-text">End Date: {{ program.endDate | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  
+  

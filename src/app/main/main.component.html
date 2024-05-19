@@ -1,0 +1,83 @@
+<div class="container">
+  <app-navbar (search)="search($event)" (switchComponent)="switchComponent($event)"  (filterCategory)="filterCategory($event)" (filterLocation)="filterLocation($event)" class="nav"></app-navbar>
+    <div *ngIf="currentComponent === 'Home'">
+        <div class="container text-center mb-4" style="margin-top: 10%;">
+      <div class="row row-cols-3">
+        <menu-item *ngFor="let menuItem of getCurrentPageItems()" [fitnessProgram]="menuItem" class="item"></menu-item>
+      </div>
+      <nav aria-label="Page navigation">
+        <ul class="pagination justify-content-center">
+          <li class="page-item" [class.disabled]="currentPage === 1">
+            <a class="page-link" href="#" (click)="goToPage(currentPage - 1, $event)" aria-label="Previous">
+              <span aria-hidden="true">&laquo;</span>
+            </a>
+          </li>
+          <li class="page-item" *ngFor="let page of pages" [class.active]="page === currentPage">
+            <a class="page-link" href="#" (click)="goToPage(page, $event)">{{ page }}</a>
+          </li>
+          <li class="page-item" [class.disabled]="currentPage === totalPages">
+            <a class="page-link" href="#" (click)="goToPage(currentPage + 1, $event)" aria-label="Next">
+              <span aria-hidden="true">&raquo;</span>
+            </a>
+          </li>
+        </ul>
+      </nav>
+    </div>
+    <div class="container mt-5 registration-container d-flex justify-content-center">
+      <form class="mr-3" style="padding-right: 5px;">
+        <h1 class="mb-3 form-floating" style="text-align: center;color: #007bff;">Add new Fitness Program</h1>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="name" placeholder="Name" name="name" [(ngModel)]="formData.name" required>
+            <label for="name">Name</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="price" placeholder="Price" name="price" [(ngModel)]="formData.price" required>
+            <label for="price">Price</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="duration" placeholder="Duration" name="duration" [(ngModel)]="formData.duration" required>
+            <label for="duration">Duration</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="description" placeholder="Description" name="description" [(ngModel)]="formData.description" required>
+            <label for="description">Description</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="number" class="form-control" id="level" placeholder="Level" name="level" [(ngModel)]="formData.level" required>
+            <label for="level">Level</label>
+        </div>
+        <div class="form-floating mb-3">
+            <input type="text" class="form-control" id="location" placeholder="Location" name="location" [(ngModel)]="formData.location">
+            <label for="location">Location</label>
+        </div>
+        <div class="form-floating mb-5 justify-content-center">
+            <div class="nav-item dropdown" [class.show]="dropdownOpenCategory" (click)="fetchDropdownItemsCategory()">
+                <a class="nav-link dropdown-toggle" role="button">
+                    {{ selectedCategory }}
+                </a>
+                <ul class="dropdown-menu" [class.show]="dropdownOpenCategory">
+                    <li *ngFor="let category of dropdownItemsCategory">
+                        <button class="dropdown-item" (click)="selectCategory(category)">{{ category }}</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    
+        <button type="submit" class="btn btn-primary mb-5" (click)="next()">Next</button>
+    </form>
+    
+      </div>
+  </div>
+  <div *ngIf="currentComponent === 'Profile' && loggedUser !== 'none'">
+    <h1>Profile</h1>
+    <app-profile></app-profile>
+</div>
+<div *ngIf="currentComponent === 'Messages' && loggedUser !== 'none'">
+  <h1>Messages</h1>
+  <app-messages></app-messages>
+</div>
+<div *ngIf="currentComponent === 'Suggestions' && loggedUser !== 'none'">
+  <h1>Suggestions</h1>
+  <app-suggestion></app-suggestion>
+</div>
+</div>

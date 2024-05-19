@@ -1,0 +1,36 @@
+.scroll-container {
+    max-height: 400px;
+    overflow-y: auto;
+ 
+  }
+
+  .chart-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    width: 600px;
+    height: 300px;
+    border: 1px solid #ccc;
+    padding: 10px;
+  }
+  
+  .bar {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .month {
+    margin-bottom: 5px;
+  }
+  
+  .bar-inner {
+    width: 50px;
+    background-color: #007bff;
+    text-align: center;
+    color: #fff;
+    border-radius: 5px;
+    height: 250px;
+  }
+  

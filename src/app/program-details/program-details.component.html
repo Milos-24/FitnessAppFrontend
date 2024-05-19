@@ -1,0 +1,37 @@
+<nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-brand" (click)="navigateBack()" style="border-color: transparent; background-color: transparent;">Fitness App</button>
+      </div>
+    </nav>
+
+    <div class="container mt-5">
+        <h2>Fitness Program Images</h2>
+        <div class="program-images d-flex flex-row overflow-auto">
+          <div *ngFor="let image of images" class="image-container">
+            <img [src]="getImageUrl(image.image)" alt="Image" class="img-thumbnail">
+          </div>
+        </div>
+
+        <h2 class="mt-3">Details</h2>
+        <div class="program-details">
+            <p><strong>Description:</strong> {{fitnessProgram?.description}}</p>
+            <p><strong>Duration:</strong> {{fitnessProgram?.duration}}</p>
+            <p><strong>Level:</strong> {{fitnessProgram?.level}}</p>
+            <p><strong>Location:</strong> {{fitnessProgram?.location}}</p>
+          </div>
+
+          <div class="container mt-4">
+            <div class="row">
+              <div class="col-lg-4 mb-4 mt-3" *ngFor="let exercise of exercises">
+                <div class="card">
+                  <div class="card-body" style="height: 250px; overflow-y: auto">
+                    <h2 class="card-title">{{ exercise.name }}</h2>
+                    <p class="card-text"><strong>Repetition:</strong> {{ exercise.repetition }}</p>
+                    <p class="card-text"><strong>Duration:</strong> {{ exercise.duration }}</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+      </div>

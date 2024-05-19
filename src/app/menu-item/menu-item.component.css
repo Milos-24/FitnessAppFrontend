@@ -1,0 +1,25 @@
+.program-details {
+    margin-bottom: 20px; /* Adjust as needed */
+  }
+  
+  .program-details p {
+    margin: 0;
+  }
+  
+  .program-details p strong {
+    margin-right: 5px; /* Adjust as needed */
+  }
+  
+  .program-images {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  
+  .image-container {
+    margin-bottom: 10px; /* Adjust as needed */
+  }
+  
+  .image-container img {
+    max-width: 100%;
+    height: auto;
+  }

@@ -1,0 +1,15 @@
+.image-container {
+    margin-right: 10px; /* Adjust margin as needed */
+  }
+  
+  .program-images {
+    max-width: 100%; /* Ensure the container doesn't overflow its parent */
+    overflow-x: auto; /* Enable horizontal scrolling */
+    white-space: nowrap; /* Prevent images from wrapping to the next line */
+  }
+  
+  .image-container img {
+    max-width: 400px; /* Set the maximum width of images */
+    height: auto; /* Maintain aspect ratio */
+  }
+  

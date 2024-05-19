@@ -1,0 +1,55 @@
+<nav class="navbar bg-body-tertiary fixed-top">
+    <div class="container-fluid">
+      <button class="navbar-brand" (click)="navigateBack()" style="border-color: transparent; background-color: transparent;">Fitness App</button>
+      </div>
+    </nav>
+
+<div class="d-flex justify-content-center align-items-center">
+    <div class="text-center"> 
+        <h2 class="mt-5"> Please select one image at a time, when the upload button is clicked <br> the selected image will be added to the Fitness Program, it is possible to add multiple images.</h2>
+
+        <input class="form-control" type="file" 
+                (change)="onChange($event)"> 
+
+        <button (click)="onUpload()"  
+            class="btn btn-success mt-3 mb-3"> 
+            Upload 
+        </button> 
+        <div class="container text-center jumbotron"
+        *ngIf="shortLink"> 
+        <h2> Visit Here</h2> 
+        <a href="{{shortLink}}">{{shortLink}}</a> 
+    </div> 
+
+    <div class="container" *ngIf="loading"> 
+        <h3>Loading ...</h3> 
+    </div>  
+
+    <div class="container mt-4">
+        <div class="row">
+          <div class="col-lg-4 mb-4 mt-3" *ngFor="let exercise of exercises">
+            <div class="card">
+              <div class="card-body" style="height: 250px; overflow-y: auto">
+                <h2 class="card-title">{{ exercise.name }}</h2>
+                <div class="form-group">
+                    <input type="text" class="form-control mt-2" placeholder="Duration"  name="duration" [(ngModel)]="exercise.duration">
+                  </div>
+        
+                  <div class="form-group">
+                    <input type="text" class="form-control mt-2" placeholder="Repetition"  name="repetition" [(ngModel)]="exercise.repetition">
+                  </div>
+
+                  <button (click)="onUploadExercise(exercise.id, exercise.duration, exercise.repetition)"  
+            class="btn btn-success mt-3 mb-3"> 
+            Upload 
+        </button> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div> 
+
+    
+</div>

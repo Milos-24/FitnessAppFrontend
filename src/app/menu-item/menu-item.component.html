@@ -1,0 +1,101 @@
+  <div class="col" style="margin-bottom: 10%;"><div class="card text-center">
+    <div class="card-header">
+      <ul class="nav nav-tabs card-header-tabs">
+          <li class="nav-item" *ngFor="let tab of tabs">
+              <button class="nav-link" [class.active]="currentTab === tab.name" (click)="switchTab(tab.name)">
+                  {{ tab.name }}
+                  <span class="sr-only" *ngIf="openedTab === tab.name"></span>
+              </button>
+          </li>
+          <li class="nav-item" style="justify-content: right;">
+              <button class="btn btn-danger"  (click)="deleteFitnessProgram(fitnessProgram.id)">Delete</button>
+          </li>
+      </ul>
+  </div>
+  
+      
+        <div *ngIf="currentTab === 'Participate' && loggedUser !== 'none'">
+          <div class="dropdown" style="display: inline-block; justify-content: center; position: relative;">
+            <button class="btn btn-secondary dropdown-toggle mt-2" [class.show]="dropdownOpen" data-bs-toggle="dropdown" aria-expanded="false" (click)="toggleDropdown()">
+              {{button}}
+            </button>
+            <ul class="dropdown-menu text-center" [class.show]="dropdownOpen">
+              <li><button class="dropdown-item" (click)="toggleDropdownButton('Card')">Card</button></li>
+              <li><button class="dropdown-item" (click)="toggleDropdownButton('PayPal')">PayPal</button></li>
+              <li><button class="dropdown-item" (click)="toggleDropdownButton('Cash')">Cash</button></li>
+            </ul> 
+          </div>
+          <div class="row justify-content-center mt-3" *ngIf="button !== 'Cash'">
+            <div class="col-md-6">
+              <div>
+                <div class="mb-3">
+                  <label class="form-label">Card</label>
+                  <input type="string" class="form-control" id="card" [(ngModel)]="card" required>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2"  (click)="onSubmit()">Submit</button>
+              </div>
+            </div>
+          </div>
+          <div class="row justify-content-center mt-3" *ngIf="button == 'Cash'">
+            <div class="col-md-6">
+              <form>
+                <div class="mb-3">
+                  <label class="form-label">Card</label>
+                  <input disabled="true" type="string" class="form-control" required>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <div *ngIf="currentTab === 'Comments'">
+          <div style="margin-top: 3%; height: 250px; overflow-y: auto;">
+            <div class="card mt-3 mb-1" *ngFor="let comment of comments">
+              <h3 class="card-header">Author: {{ comment.user.username}}</h3>
+              <div class="card-body">
+                <p>{{ comment.comment }}</p>
+                <p>{{comment.date | date:'dd/MM/yyyy HH:mm:ss'}}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div class="card" *ngIf="loggedUser !== 'none'" style="margin-top: 20px;">
+            <div class="card-header">Add a New Comment</div>
+            <div class="card-body">
+              <form (ngSubmit)="addComment(commentForm.value.body, fitnessProgram.id)" #commentForm="ngForm">
+                <div class="form-group">
+                  <label for="body">Content:</label>
+                  <textarea class="form-control" id="body" name="body" ngModel required></textarea>
+                </div>
+                <br>
+                <button type="submit" class="btn btn-primary" [disabled]="!commentForm.valid">Submit</button>
+              </form>
+            </div>
+          </div>
+        </div>
+
+          <div *ngIf="currentTab === 'Training'">
+            <div class="container">
+              <div class="row">
+                <div class="col-md-6">
+                  <img [src]="getFirstImage()" class="img-fluid mx-1 my-1" alt="Fitness Program Image">
+                </div>
+                <div class="col-md-6 d-flex justify-content-center">
+                  <div class="text-center ml-auto">
+                    <h2>{{fitnessProgram.name}}</h2>
+                    <h3>{{fitnessProgram.price}}$</h3>
+                  </div>
+                </div>
+              </div>
+            </div>
+          <p class="card-text">{{fitnessProgram.description}}</p>
+              <button
+                class="btn btn-primary mb-2"
+                (click)="viewDetails(fitnessProgram.id)"
+              >
+                View Details
+              </button>              
+          </div>
+        </div>
+        </div>

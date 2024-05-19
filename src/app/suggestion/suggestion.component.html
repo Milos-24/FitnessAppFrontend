@@ -1,0 +1,17 @@
+<div class="container mt-4">
+    <div class="row">
+      <div class="col-lg-4 mb-4 mt-3" *ngFor="let exercise of exercises">
+        <div class="card">
+          <div class="card-body" style="height: 250px; overflow-y: auto">
+            <h2 class="card-title">{{ exercise.name }}</h2>
+            <h3 class="card-subtitle mb-2 text-muted"> <strong>Type:</strong> {{ exercise.type }}</h3>
+            <p class="card-text"><strong>Muscle:</strong> {{ exercise.muscle }}</p>
+            <p class="card-text"><strong>Equipment:</strong> {{ exercise.equipment }}</p>
+            <p class="card-text"><strong>Difficulty:</strong> {{ exercise.difficulty }}</p>
+            <p class="card-text ">{{ exercise.instructions }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
