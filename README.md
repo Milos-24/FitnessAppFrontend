@@ -1,5 +1,10 @@
 # FitnessAngular
 
+[IP Projektni 2023.pdf](https://github.com/Milos-24/FitnessAppFrontend/files/15370407/IP.Projektni.2023.pdf)
+
+
+
+
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 17.2.1.
 
 ## Development server
