@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
+import { error } from 'console';
 import { Observable, map } from 'rxjs';
 
 @Component({
@@ -53,6 +54,8 @@ export class MessagesComponent implements OnInit {
   }
 
   getChatUsers(): Observable<User[]> {
+
+
     return this.http.get<any[]>(`${this.baseUrl}/message/`+ sessionStorage.getItem('loggedInUser')).pipe(
       map(messages => {
         const usersMap = new Map<string, { sender: string, receiver: string }>();
@@ -60,8 +63,10 @@ export class MessagesComponent implements OnInit {
           usersMap.set(message.sender, { sender: message.sender, receiver: message.receiver });
           usersMap.set(message.receiver, { sender: message.receiver, receiver: message.sender });
         });
-
         const users: User[] = [];
+
+
+
         usersMap.forEach((user, username) => {
           const userMessages = messages.filter(message => message.sender === username || message.receiver === username);
           const sortedMessages = userMessages.sort((a, b) => {
@@ -70,6 +75,23 @@ export class MessagesComponent implements OnInit {
           users.push(new User(username, sortedMessages));
         });
         const loggedInUser = sessionStorage.getItem('loggedInUser');
+
+        this.http.get<any[]>(`${this.baseUrl}/users/usernames/`+ sessionStorage.getItem('loggedInUser')).subscribe(
+          (response: any[]) => {
+            for (let i = 0; i < response.length; i++) {
+              const username = response[i];
+              if (!this.users.find(user => user.name === username)) {
+                  this.users.push(new User(username, []));
+              }
+          }         
+            console.log(users)
+          },
+          (error: any) => {
+            console.error('Error getting usernames:', error);
+          }
+        );
+
+
         
         return users.filter(user => user.name !== loggedInUser);;
       })

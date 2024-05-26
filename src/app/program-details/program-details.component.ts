@@ -83,7 +83,8 @@ export class ProgramDetailsComponent implements OnInit{
 export interface Exercise{
   name: string,
   duration: string,
-  repetition: string
+  repetition: string,
+  link: string
 }
 
 export interface Image{

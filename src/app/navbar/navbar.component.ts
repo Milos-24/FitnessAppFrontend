@@ -13,6 +13,7 @@ export class NavbarComponent implements OnInit{
   @Output() switchComponent: EventEmitter<string> = new EventEmitter<string>();
   @Output() filterCategory: EventEmitter<string> = new EventEmitter<string>();
   @Output() filterLocation: EventEmitter<string> = new EventEmitter<string>();
+  @Output() filterMyPrograms: EventEmitter<string> = new EventEmitter<string>();
   @Output() search: EventEmitter<{ searchQuery: string, searchOption: any }> = new EventEmitter<{ searchQuery: string, searchOption: any }>();
   offcanvasOpen: boolean = false;
   dropdownItems: any[] = [];
@@ -69,6 +70,11 @@ export class NavbarComponent implements OnInit{
 
   onCategoryButtonClick(filter: string) {
     this.filterCategory.emit(filter)
+  }
+
+  onMyProgramsButtonClick()
+  {
+    this.filterMyPrograms.emit("");
   }
 
   onLocationButtonClick(filter: string) {

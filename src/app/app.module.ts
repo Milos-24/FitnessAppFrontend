@@ -15,7 +15,6 @@ import { MessagesComponent } from './messages/messages.component';
 import { ProfileComponent } from './profile/profile.component';
 import { SuggestionComponent } from './suggestion/suggestion.component';
 import { RegistrationComponent } from './registration/registration.component';
-import { NgxChartsModule } from '@swimlane/ngx-charts';
 import { ProgramDetailsComponent } from './program-details/program-details.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { FileUploadComponent } from './file-upload/file-upload.component';
@@ -39,7 +38,6 @@ import { FileUploadComponent } from './file-upload/file-upload.component';
     AppRoutingModule,
     ReactiveFormsModule,
     MatGridListModule,
-    NgxChartsModule,
     FormsModule, 
     HttpClientModule,
     RouterModule.forRoot([

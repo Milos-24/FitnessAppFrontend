@@ -6,6 +6,8 @@ import { error } from 'console';
 import { response } from 'express';
 import { Observable } from 'rxjs';
 import { saveAs } from 'file-saver';
+import { jsPDF} from 'jspdf';
+
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
@@ -28,7 +30,7 @@ private baseUrl = 'http://localhost:8080';
   weight!: number;
 exerciseEntry: string='';
 progressEntry: string='';
-constructor(private http: HttpClient, private router: Router){
+constructor(private http: HttpClient){
 
 
 }
@@ -91,35 +93,50 @@ getMembership(id:number)
   );
 }
 
-
-
 onSaveJournal(): void {
-  this.getJournalPdf().subscribe(response => {
-    const contentDispositionHeader = response.headers.get('Content-Disposition');
-    const filename = this.getFilenameFromContentDisposition(contentDispositionHeader!);
-    saveAs(response.body, filename);
-  });
-}
-
-getJournalPdf(): Observable<HttpResponse<Blob>> {
   const id = sessionStorage.getItem('loggedInUserId');
 
-  return this.http.get(`${this.baseUrl}/journal/${id}`, {
-    responseType: 'blob',
-    observe: 'response'
+  if (!id) {
+    console.error('User ID is not available in session storage');
+    return;
+  }
+
+  const doc = new jsPDF();
+  doc.setFont('Times');
+  doc.setFontSize(18);
+  doc.text('My Fitness Journal', 10, 30);
+
+  doc.setFontSize(12);
+  let yOffset = 40;
+  const lineHeight = 10;
+  const pageHeight = doc.internal.pageSize.height;
+  const margin = 14;
+
+  this.http.get<Journal[]>(`${this.baseUrl}/journal/` + id).subscribe({
+    next: (response: Journal[]) => {
+      response.forEach(entry => {
+        if (yOffset + 30 > pageHeight - margin) {
+          doc.addPage();
+          yOffset = margin;
+        }
+        doc.text(`Progress: ${entry.progressEntry}`, margin, yOffset);
+        doc.text(`Weight: ${entry.weight}`, margin, yOffset + lineHeight)
+        doc.text(`Exercise info: ${entry.exerciseEntry}`, margin, yOffset + lineHeight * 2 );
+        doc.text(`Date: ${new Date(entry.entryDate).toLocaleString()}`, margin, yOffset + lineHeight * 3);
+        doc.text('=====================================', margin, yOffset + lineHeight * 4);
+        yOffset += lineHeight * 5;
+      });
+
+      doc.save('fitness_journal.pdf');
+    },
+    error: err => {
+      console.error('Error fetching journal entries', err);
+    }
   });
 }
 
-getFilenameFromContentDisposition(contentDispositionHeader: string): string {
-  let filename = 'download.pdf';
-  if (contentDispositionHeader) {
-    const result = contentDispositionHeader.match(/filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/);
-    if (result && result[1]) {
-      filename = result[1].replace(/['"]/g, '');
-    }
-  }
-  return filename;
-}
+
+
 
 
 getJournal(id:number)
@@ -129,7 +146,7 @@ getJournal(id:number)
       this.journal = response; 
       this.entryDates = this.journal.map(entry => {
         const date = new Date(entry.entryDate);
-        return date.toLocaleDateString('en-US'); // You can specify your preferred locale here
+        return date.toLocaleDateString('en-US');
       });
       this.weights = this.journal.map(entry => entry.weight);
 

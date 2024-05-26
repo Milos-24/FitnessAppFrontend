@@ -26,9 +26,10 @@ export class MenuItemComponent implements OnInit{
   accordionOpen: boolean = false;
   dropdownOpen: boolean = false;
   currentTab: string = 'Training';
-  openedTab: string = 'Training'; 
+  openedTab: string = 'Training';
   button: string = 'Payment';
   loggedUser: string = '';
+  loggedUserId: number | undefined;
   tabs: { name: string }[] = [
     { name: 'Training' },
     { name: 'Comments' },
@@ -36,23 +37,35 @@ export class MenuItemComponent implements OnInit{
   ];
 
   constructor(private http: HttpClient, private sanitizer: DomSanitizer, private router:Router){
+  
   }
+
 
   ngOnInit(): void {
      this.fetchComments();
      this.fetchImages();
   }
+
   deleteFitnessProgram(id){
-    this.http.delete(`${this.baseUrl}/fitnessprograms/`+id).subscribe(
+    const params = new HttpParams()
+    .set('userId', Number(sessionStorage.getItem('loggedInUserId')));
+     
+      
+    this.http.delete(`${this.baseUrl}/fitnessprograms/`+id, { params }).subscribe(
       (response)=>{
         console.log("Success");
       },
       (error)=>
         {
-          console.error(error);
-        }
+          if(error.status === 400) {
+            alert('You can only delete programs you made!')
+          } else {
+            console.error(error);
+          }        }
     )
   }
+
+  
 
   viewDetails(id)
   {
@@ -151,19 +164,19 @@ export class MenuItemComponent implements OnInit{
     }
   }
 
-  addComment(commentContent: string, fitness_program_id:number) {
+  addComment(commentContent: string, fitnessProgramId:number) {
     const newComment: CommentDto = {
       comment: commentContent,
-      fitness_program_id: fitness_program_id,
-      userId: 1,
+      fitnessProgramId: fitnessProgramId,
+      user: sessionStorage.getItem('loggedInUser') || '{}',
       date: new Date() 
     };
 
-    const params = new HttpParams()
-    .set('fitnessProgramId', fitness_program_id)
-    .set('user', sessionStorage.getItem('loggedInUser') || '{}');
+    // const params = new HttpParams()
+    // .set('fitnessProgramId', fitnessProgramId)
+    // .set('user', sessionStorage.getItem('loggedInUser') || '{}');
 
-    this.http.post<Comment>(`${this.baseUrl}/comment/create`, newComment, { params }).subscribe(
+    this.http.post<Comment>(`${this.baseUrl}/comment/create`, newComment).subscribe(
       (response: Comment) => {
         console.log('Comment added successfully:', response);
         
@@ -227,8 +240,8 @@ export interface Comment {
 export interface CommentDto {
   comment: string;
   date: Date;
-  fitness_program_id: number;
-  userId: number;
+  fitnessProgramId: number;
+  user: string;
 }
 
 export interface Image{

@@ -34,12 +34,15 @@
                 <div class="form-group">
                     <input type="text" class="form-control mt-2" placeholder="Duration"  name="duration" [(ngModel)]="exercise.duration">
                   </div>
+                  <div class="form-group">
+                    <input type="text" class="form-control mt-2" placeholder="Link"  name="link" [(ngModel)]="exercise.link">
+                  </div>
         
                   <div class="form-group">
                     <input type="text" class="form-control mt-2" placeholder="Repetition"  name="repetition" [(ngModel)]="exercise.repetition">
                   </div>
 
-                  <button (click)="onUploadExercise(exercise.id, exercise.duration, exercise.repetition)"  
+                  <button (click)="onUploadExercise(exercise.id, exercise.duration, exercise.repetition, exercise.link)"  
             class="btn btn-success mt-3 mb-3"> 
             Upload 
         </button> 

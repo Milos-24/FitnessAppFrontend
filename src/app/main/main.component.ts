@@ -84,6 +84,12 @@ export class MainComponent implements OnInit{
   next() :void {
     this.formData.selectedCategory=this.selectedCategory;
     console.log(this.formData);
+
+    if(sessionStorage.getItem('loggedInUser')==='none')
+      {
+        alert('Cannot add new Fitness Program without account!')
+        return
+      }
     
     if (!this.isFormDataValid()) {
       alert('Form data is not filled. Please fill all required fields.');
@@ -138,6 +144,20 @@ export class MainComponent implements OnInit{
   selectCategory(category:string)
   {
     this.selectedCategory=category;
+  }
+
+  filterMyPrograms()
+  {
+    this.loggedUser = sessionStorage.getItem('loggedInUser') || ''
+
+    this.http.get<FitnessProgram[]>(`${this.baseUrl}/fitnessprograms/my-programs/`+this.loggedUser).subscribe(
+      (response: FitnessProgram[]) => {
+        this.menuItems = response; 
+      },
+      (error: any) => {
+        console.error('Error fetching dropdown items:', error);
+      }
+    );
   }
 
 

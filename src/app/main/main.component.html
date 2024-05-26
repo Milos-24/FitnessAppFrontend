@@ -1,5 +1,5 @@
 <div class="container">
-  <app-navbar (search)="search($event)" (switchComponent)="switchComponent($event)"  (filterCategory)="filterCategory($event)" (filterLocation)="filterLocation($event)" class="nav"></app-navbar>
+  <app-navbar (search)="search($event)" (switchComponent)="switchComponent($event)"  (filterCategory)="filterCategory($event)" (filterMyPrograms)="filterMyPrograms()" (filterLocation)="filterLocation($event)" class="nav"></app-navbar>
     <div *ngIf="currentComponent === 'Home'">
         <div class="container text-center mb-4" style="margin-top: 10%;">
       <div class="row row-cols-3">
@@ -23,7 +23,7 @@
         </ul>
       </nav>
     </div>
-    <div class="container mt-5 registration-container d-flex justify-content-center">
+    <div class="container mt-5 registration-container d-flex justify-content-center" *ngIf="loggedUser !== 'none'">
       <form class="mr-3" style="padding-right: 5px;">
         <h1 class="mb-3 form-floating" style="text-align: center;color: #007bff;">Add new Fitness Program</h1>
         <div class="form-floating mb-3">

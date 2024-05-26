@@ -28,6 +28,7 @@
                     <h2 class="card-title">{{ exercise.name }}</h2>
                     <p class="card-text"><strong>Repetition:</strong> {{ exercise.repetition }}</p>
                     <p class="card-text"><strong>Duration:</strong> {{ exercise.duration }}</p>
+                    <a *ngIf="exercise.link" [href]="exercise.link" class="btn btn-primary" target="_blank">Go to Exercise Video</a>
                   </div>
                 </div>
               </div>

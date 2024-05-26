@@ -53,12 +53,13 @@ export class FileUploadComponent implements OnInit {
       ); 
   } 
 
-  onUploadExercise(id:number, duration:string, repetition:string)
+  onUploadExercise(id:number, duration:string, repetition:string, link:string)
   {
 
     const params = new HttpParams()
     .set('duration', duration)
     .set('repetition', repetition)
+    .set('link', link)
     .set('fitnessProgramId', sessionStorage.getItem('newFitnessProgramId')!);
 
     this.http.post(`${this.baseUrl}/programexercise/`+id, null, { params }).subscribe(
@@ -80,6 +81,7 @@ export class FileUploadComponent implements OnInit {
 
 export interface Exercise{
   name: string,
+  link: string,
   duration: string,
   repetition: string,
   id: number
